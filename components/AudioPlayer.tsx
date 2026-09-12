@@ -4,49 +4,46 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /* ============================================================================
-   AudioPlayer
-   ----------------------------------------------------------------------------
-   There was no soundtrack to work from, so the music is written in code: a
-   warm three-oscillator pad under a slow, randomised major-pentatonic figure,
-   fed through a long feedback delay. It never repeats exactly and it never
-   fights the page.
-
-   Everything is created lazily inside the click handler, because browsers only
-   allow an AudioContext to start from a real user gesture.
-
-   WANT A REAL SONG INSTEAD?
-   Drop an mp3 at /public/media/song.mp3 and set USE_FILE to true.
-   ========================================================================== */
+   AudioPlayer — Generative Romantic Symphony & Soundscapes
+   ============================================================================ */
 
 const USE_FILE = false;
 const FILE_SRC = "/media/song.mp3";
 
-/** Major pentatonic across two octaves, in semitones from the root. */
+type SoundMode = "celestial" | "piano" | "rain";
+
+const SOUND_MODES: Array<{ id: SoundMode; label: string; icon: string }> = [
+  { id: "celestial", label: "Celestial Dream", icon: "✨" },
+  { id: "piano", label: "Lovers' Piano", icon: "🎹" },
+  { id: "rain", label: "Midnight Rain", icon: "🌧️" },
+];
+
 const SCALE = [0, 2, 4, 7, 9, 12, 14, 16, 19, 21];
-/** G#3 — low enough to sit under everything. */
-const ROOT = 207.65;
-const TARGET_VOLUME = 0.26;
+const ROOT = 207.65; // G#3
+const TARGET_VOLUME = 0.28;
 
 export default function AudioPlayer() {
   const [playing, setPlaying] = useState(false);
   const [ready, setReady] = useState(false);
   const [hint, setHint] = useState(true);
+  const [mode, setMode] = useState<SoundMode>("celestial");
+  const [showMenu, setShowMenu] = useState(false);
 
   const ctxRef = useRef<AudioContext | null>(null);
   const masterRef = useRef<GainNode | null>(null);
   const timerRef = useRef<number | null>(null);
-  const nodesRef = useRef<OscillatorNode[]>([]);
+  const nodesRef = useRef<Array<OscillatorNode | AudioNode>>([]);
   const elementRef = useRef<HTMLAudioElement | null>(null);
 
-  /* --- teardown ---------------------------------------------------------- */
+  // Teardown
   useEffect(() => {
     return () => {
       if (timerRef.current) window.clearTimeout(timerRef.current);
       nodesRef.current.forEach((n) => {
         try {
-          n.stop();
+          if ("stop" in n && typeof n.stop === "function") (n as OscillatorNode).stop();
         } catch {
-          /* already stopped */
+          // already stopped
         }
       });
       nodesRef.current = [];
@@ -56,13 +53,58 @@ export default function AudioPlayer() {
     };
   }, []);
 
-  /* --- the hint fades on its own ---------------------------------------- */
+  // Fade hint
   useEffect(() => {
-    const id = window.setTimeout(() => setHint(false), 9000);
+    const id = window.setTimeout(() => setHint(false), 8000);
     return () => window.clearTimeout(id);
   }, []);
 
-  /* --- build the instrument once ---------------------------------------- */
+  // SFX Synth (chimes, bells, pops)
+  const playSfx = useCallback((type: string) => {
+    if (!ctxRef.current) return;
+    const ctx = ctxRef.current;
+    if (ctx.state === "suspended") void ctx.resume();
+
+    const t = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    if (type === "bell" || type === "chime") {
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(880, t);
+      osc.frequency.exponentialRampToValueAtTime(1760, t + 0.1);
+      gain.gain.setValueAtTime(0.12, t);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 1.2);
+    } else if (type === "pop") {
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(440, t);
+      osc.frequency.exponentialRampToValueAtTime(880, t + 0.08);
+      gain.gain.setValueAtTime(0.08, t);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+    } else {
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(659.25, t);
+      gain.gain.setValueAtTime(0.06, t);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.6);
+    }
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + 1.3);
+  }, []);
+
+  // Listen for SFX events across components
+  useEffect(() => {
+    const handleSfx = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      playSfx(customEvent.detail || "chime");
+    };
+    window.addEventListener("nandini:sfx", handleSfx);
+    return () => window.removeEventListener("nandini:sfx", handleSfx);
+  }, [playSfx]);
+
+  // Build Procedural Audio Engine
   const build = useCallback(() => {
     if (ctxRef.current) return;
 
@@ -81,14 +123,14 @@ export default function AudioPlayer() {
     const lowpass = ctx.createBiquadFilter();
     lowpass.type = "lowpass";
     lowpass.frequency.value = 1800;
-    lowpass.Q.value = 0.4;
+    lowpass.Q.value = 0.5;
 
     const delay = ctx.createDelay(2.5);
-    delay.delayTime.value = 0.62;
+    delay.delayTime.value = 0.68;
     const feedback = ctx.createGain();
-    feedback.gain.value = 0.36;
+    feedback.gain.value = 0.38;
     const wet = ctx.createGain();
-    wet.gain.value = 0.4;
+    wet.gain.value = 0.42;
 
     master.connect(lowpass);
     lowpass.connect(ctx.destination);
@@ -98,8 +140,8 @@ export default function AudioPlayer() {
     delay.connect(wet);
     wet.connect(ctx.destination);
 
-    /* The pad: three detuned voices, each breathing on its own slow LFO. */
-    [0, 0.06, -0.05].forEach((detune, i) => {
+    // Warm multi-oscillator pad
+    [0, 0.05, -0.05].forEach((detune, i) => {
       const osc = ctx.createOscillator();
       osc.type = i === 1 ? "triangle" : "sine";
       osc.frequency.value = (ROOT / 2) * (i === 2 ? 1.5 : 1);
@@ -123,7 +165,7 @@ export default function AudioPlayer() {
       nodesRef.current.push(osc, lfo);
     });
 
-    /* The figure on top: one soft note at a time, loosely timed. */
+    // Melody generator
     let step = 0;
     const playNote = () => {
       const c = ctxRef.current;
@@ -144,16 +186,16 @@ export default function AudioPlayer() {
       voice.frequency.value = freq;
 
       const shimmer = c.createOscillator();
-      shimmer.type = "sine";
-      shimmer.frequency.value = freq * 2.002;
+      shimmer.type = "triangle";
+      shimmer.frequency.value = freq * 2.004;
 
       const env = c.createGain();
       env.gain.setValueAtTime(0.0001, t);
-      env.gain.linearRampToValueAtTime(0.1, t + 0.55);
-      env.gain.exponentialRampToValueAtTime(0.0008, t + 3.6);
+      env.gain.linearRampToValueAtTime(0.09, t + 0.5);
+      env.gain.exponentialRampToValueAtTime(0.0005, t + 3.8);
 
       const shimmerGain = c.createGain();
-      shimmerGain.gain.value = 0.22;
+      shimmerGain.gain.value = 0.18;
 
       voice.connect(env);
       shimmer.connect(shimmerGain);
@@ -162,18 +204,17 @@ export default function AudioPlayer() {
 
       voice.start(t);
       shimmer.start(t);
-      voice.stop(t + 3.9);
-      shimmer.stop(t + 3.9);
+      voice.stop(t + 4);
+      shimmer.stop(t + 4);
 
       step += 1;
-      timerRef.current = window.setTimeout(playNote, 1500 + Math.random() * 1700);
+      timerRef.current = window.setTimeout(playNote, 1400 + Math.random() * 1600);
     };
 
     playNote();
     setReady(true);
   }, []);
 
-  /* --- fades ------------------------------------------------------------- */
   const fadeTo = useCallback((value: number, seconds: number) => {
     const ctx = ctxRef.current;
     const master = masterRef.current;
@@ -211,15 +252,15 @@ export default function AudioPlayer() {
     if (ctx.state === "suspended") void ctx.resume();
 
     if (playing) {
-      fadeTo(0, 1.1);
+      fadeTo(0, 1.2);
       setPlaying(false);
     } else {
-      fadeTo(TARGET_VOLUME, 3);
+      fadeTo(TARGET_VOLUME, 2.5);
       setPlaying(true);
     }
   }, [build, fadeTo, playing]);
 
-  /* --- duck the music while a video is playing --------------------------- */
+  // Duck audio when video plays
   useEffect(() => {
     const onDuck = () => fadeTo(0.03, 0.5);
     const onRestore = () => {
@@ -234,30 +275,32 @@ export default function AudioPlayer() {
   }, [fadeTo, playing]);
 
   return (
-    <div className="fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-[max(1.25rem,env(safe-area-inset-right))] z-50 flex items-center gap-3">
+    <div className="fixed bottom-5 right-5 z-50 flex items-center gap-3">
+      {/* Sound On Hint */}
       <AnimatePresence>
         {hint && !playing && (
-          <motion.span
+          <motion.button
+            type="button"
+            onClick={toggle}
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 10 }}
-            transition={{ duration: 0.7, ease: [0.22, 0.61, 0.24, 1] }}
-            className="glass-soft hidden rounded-full px-4 py-2 text-[11px] font-light tracking-[0.18em] text-haze uppercase sm:block"
+            className="glass-soft hidden sm:flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-light tracking-wider text-ether uppercase border border-rose/30 shadow-[0_0_20px_rgba(242,128,155,0.2)]"
           >
-            sound on karo
-          </motion.span>
+            <span>🎵 Tap for romantic music</span>
+          </motion.button>
         )}
       </AnimatePresence>
 
+      {/* Main Music Button */}
       <motion.button
         type="button"
         onClick={toggle}
         aria-pressed={playing}
-        aria-label={playing ? "Music band karo" : "Music chaalu karo"}
-        className="glass relative grid h-12 w-12 place-items-center rounded-full text-ether transition-colors hover:border-white/25"
+        aria-label={playing ? "Music mute karo" : "Music play karo"}
+        className="glass relative grid h-12 w-12 place-items-center rounded-full text-ether transition-all hover:border-rose/50 shadow-[0_8px_30px_rgba(0,0,0,0.8)]"
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.94 }}
-        transition={{ type: "spring", stiffness: 400, damping: 22 }}
       >
         {playing ? (
           <span className="flex h-4 items-end gap-[3px]" aria-hidden>
@@ -267,10 +310,10 @@ export default function AudioPlayer() {
                 className="w-[2px] rounded-full bg-rose"
                 animate={{ height: ["30%", "100%", "45%", "80%", "30%"] }}
                 transition={{
-                  duration: 1.6 + i * 0.25,
+                  duration: 1.4 + i * 0.2,
                   repeat: Infinity,
                   ease: "easeInOut",
-                  delay: i * 0.12,
+                  delay: i * 0.1,
                 }}
                 style={{ height: "40%" }}
               />
@@ -279,25 +322,23 @@ export default function AudioPlayer() {
         ) : (
           <svg
             viewBox="0 0 24 24"
-            className="h-[18px] w-[18px]"
+            className="h-[18px] w-[18px] text-haze"
             fill="none"
             stroke="currentColor"
             strokeWidth="1.6"
             strokeLinecap="round"
             strokeLinejoin="round"
-            aria-hidden
           >
             <path d="M11 5 6 9H3v6h3l5 4V5Z" />
             <path d="m17 9 4 6M21 9l-4 6" />
           </svg>
         )}
 
-        {playing && ready && (
+        {playing && (
           <motion.span
-            className="absolute inset-0 rounded-full border border-rose/40"
-            animate={{ scale: [1, 1.5], opacity: [0.6, 0] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
-            aria-hidden
+            className="absolute inset-0 rounded-full border border-rose/50"
+            animate={{ scale: [1, 1.45], opacity: [0.6, 0] }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
           />
         )}
       </motion.button>

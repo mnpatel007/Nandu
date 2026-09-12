@@ -193,9 +193,29 @@ export default function TrailerOutro() {
   const reduced = Boolean(useReducedMotion());
   const variants = reduced ? RISE_REDUCED : RISE;
   const [opened, setOpened] = useState(false);
+  const [hugCount, setHugCount] = useState(0);
+  const [showHugToast, setShowHugToast] = useState(false);
+
+  const toggleHeartbeat = () => {
+    const nextState = !opened;
+    setOpened(nextState);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("nandini:sfx", { detail: "chime" }));
+    }
+  };
+
+  const sendHug = () => {
+    setHugCount((c) => c + 1);
+    setShowHugToast(true);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("nandini:sfx", { detail: "pop" }));
+    }
+    setTimeout(() => setShowHugToast(false), 2600);
+  };
 
   return (
     <section
+      id="outro"
       className="relative flex min-h-[110svh] flex-col items-center justify-center overflow-hidden px-6 py-[16vh]"
       aria-label="Aage shu"
     >
@@ -265,7 +285,7 @@ export default function TrailerOutro() {
         >
           <motion.button
             type="button"
-            onClick={() => setOpened((v) => !v)}
+            onClick={toggleHeartbeat}
             aria-expanded={opened}
             aria-controls="final-word"
             whileHover={{ scale: 1.05 }}
@@ -278,9 +298,7 @@ export default function TrailerOutro() {
             {opened ? "bas, etlu j" : "Raah jo"}
           </motion.button>
 
-          {/* The reveal animates opacity and position only — never height.
-              If the animation engine ever stalls, the text is still laid out
-              and still readable, so the button can never look broken. */}
+          {/* The reveal animates opacity and position only — never height. */}
           <AnimatePresence initial={false}>
             {opened && (
               <motion.div
@@ -291,7 +309,7 @@ export default function TrailerOutro() {
                 exit={{ opacity: 0, y: -10, filter: "blur(10px)" }}
                 transition={{ duration: 1, ease: [0.22, 0.61, 0.24, 1] }}
               >
-                <div className="flex flex-col items-center gap-5 pt-2">
+                <div className="flex flex-col items-center gap-6 pt-2">
                   <p className="max-w-md font-display text-[clamp(1.15rem,3.6vw,1.6rem)] font-light leading-relaxed text-ether text-glow balance">
                     Hu kyanya nathi jato.
                     <br />
@@ -300,6 +318,35 @@ export default function TrailerOutro() {
                   <span className="text-[10px] font-light uppercase tracking-[0.5em] text-rose/80">
                     — Meet
                   </span>
+
+                  {/* Interactive Love Hug Button */}
+                  <div className="pt-4 flex flex-col items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={sendHug}
+                      className="glass px-5 py-2 rounded-full text-xs font-light text-rose border border-rose/40 hover:bg-rose/15 transition-all flex items-center gap-1.5"
+                    >
+                      <span>Send a warm hug to Meet</span>
+                      <span>🤗♥</span>
+                    </button>
+
+                    {hugCount > 0 && (
+                      <span className="text-[10px] font-mono text-gold">
+                        Hugs sent: {hugCount}
+                      </span>
+                    )}
+
+                    {showHugToast && (
+                      <motion.p
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        className="text-xs text-ether italic"
+                      >
+                        Meet felt your hug across the universe! 💕
+                      </motion.p>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             )}

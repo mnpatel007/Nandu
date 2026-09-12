@@ -1,48 +1,29 @@
 /* ============================================================================
-   THE MEMORY MANIFEST
+   THE MEMORY MANIFEST & ARCHIVE
    ----------------------------------------------------------------------------
-   This is the only file Meet needs to touch to change what the gallery shows.
-
-   Every file listed here lives in  /public/media/  and is referenced from the
-   web root, so "/media/whatever.jpg" is the correct form of the path.
-
-   To ADD a photo:      drop the file into /public/media/ and add an entry.
-   To REMOVE a photo:   delete its entry (the file can stay where it is).
-   To REORDER:          move entries up or down — the gallery follows this order.
-   To CHANGE a caption: edit `caption`. Leave it out for no caption.
-
-   `rotate: true`  — for the frames that were shot lying down. They are stored
-   sideways with the top of the head toward the RIGHT edge, so the card renders
-   them in a landscape frame turned a quarter turn anticlockwise. Only set this
-   on photos that genuinely look sideways in a file browser.
+   Every single precious photograph and video of Nandini, cataloged with
+   heartfelt captions, categories, and handwritten notes on the back.
    ========================================================================== */
 
+export type MemoryCategory = "all" | "smile" | "saree" | "candid" | "balcony" | "video";
+
 export type Memory = {
-  /** Path from the web root — files live in /public/media/ */
+  id: string;
   src: string;
-  /** Read aloud by screen readers. Keep it human. */
   alt: string;
-  /** Optional line that sits under the frame. */
   caption?: string;
-  /** Photo or video. Videos get a real <video> element with controls. */
+  backNote?: string;
+  category: MemoryCategory;
   kind?: "image" | "video";
-  /** Poster frame for a video. */
   poster?: string;
-  /** True for frames stored a quarter turn off. */
   rotate?: boolean;
-  /** Which way the card drifts as she scrolls past it. */
   side?: "left" | "right" | "center";
-  /** Relative size of the card. */
   size?: "sm" | "md" | "lg";
+  date?: string;
 };
 
-/* --------------------------------------------------------------------------
-   The lines that sit between the photographs.
-   These are the ones that do the emotional work — change them freely.
-   -------------------------------------------------------------------------- */
 export type Interlude = {
   lines: string[];
-  /** A quieter follow-up under the main line. */
   soft?: string;
 };
 
@@ -51,9 +32,9 @@ export type GalleryBlock =
   | { type: "interlude"; data: Interlude };
 
 /* --------------------------------------------------------------------------
-   THE SEQUENCE
+   CURATED NARRATIVE SCROLL
+   The intimate story experienced while scrolling down the main page.
    -------------------------------------------------------------------------- */
-
 export const GALLERY: GalleryBlock[] = [
   {
     type: "interlude",
@@ -65,9 +46,12 @@ export const GALLERY: GalleryBlock[] = [
   {
     type: "memory",
     data: {
+      id: "mem-30",
       src: "/media/IMG-20260905-WA0030.jpg",
       alt: "Nandini balcony ma, tadke",
       caption: "aa wali. bas aa wali.",
+      backNote: "Tadko pan tara chehra par aavi ne shant thai jaay che. Aa photo hu kyarey bhuli nathi shakto.",
+      category: "balcony",
       side: "left",
       size: "lg",
     },
@@ -75,9 +59,12 @@ export const GALLERY: GalleryBlock[] = [
   {
     type: "memory",
     data: {
+      id: "mem-35",
       src: "/media/IMG-20260905-WA0035.jpg",
       alt: "Nandini, banne haath gaal par",
       caption: "ne pachi kahe che — hu photogenic nathi",
+      backNote: "Jyre tu potana gaal par haath muki ne sharmaay che, duniya ni sauthi sundar chokri lage che.",
+      category: "smile",
       side: "right",
       size: "md",
     },
@@ -92,9 +79,12 @@ export const GALLERY: GalleryBlock[] = [
   {
     type: "memory",
     data: {
+      id: "mem-08",
       src: "/media/IMG-20260903-WA0008.jpg",
       alt: "Nandini, hasti hasti, najik thi",
       caption: "aankho pehla hase che. moodh pachi.",
+      backNote: "Tari aankho ma je chamak aave che ne jyre tu dil thi hase che... ae mari sauthi favourite che.",
+      category: "smile",
       rotate: true,
       side: "center",
       size: "lg",
@@ -103,8 +93,12 @@ export const GALLERY: GalleryBlock[] = [
   {
     type: "memory",
     data: {
+      id: "mem-27",
       src: "/media/IMG-20260905-WA0027.jpg",
       alt: "Nandini besi ne, shant",
+      caption: "shanti, tara chehra ma j che",
+      backNote: "Aatli shanti to mandir ma pan nathi felt thoti jetli tari aaspas raheva thi thay che.",
+      category: "candid",
       side: "left",
       size: "md",
     },
@@ -112,9 +106,12 @@ export const GALLERY: GalleryBlock[] = [
   {
     type: "memory",
     data: {
+      id: "mem-02",
       src: "/media/IMG-20260901-WA0002.jpg",
       alt: "Nandini saree ma, aarsa saamne",
       caption: "saree ma to kaik alag j lage che",
+      backNote: "Koi shabd j nathi. Saree ma tu etli pyari lage che ke nigaah hathava nu man j na thay.",
+      category: "saree",
       side: "right",
       size: "md",
     },
@@ -129,9 +126,12 @@ export const GALLERY: GalleryBlock[] = [
   {
     type: "memory",
     data: {
+      id: "mem-43",
       src: "/media/IMG-20260905-WA0043.jpg",
       alt: "Nandini, haath par chin, upar jou",
       caption: "aa moment. ahiyan j rok.",
+      backNote: "Tu vicharti hoy tyre pan etli graceful lage che. Tara aakhe aakha vicharo ne samji levo chu.",
+      category: "candid",
       side: "center",
       size: "lg",
     },
@@ -139,8 +139,12 @@ export const GALLERY: GalleryBlock[] = [
   {
     type: "memory",
     data: {
+      id: "mem-13",
       src: "/media/IMG-20260905-WA0013.jpg",
       alt: "Nandini, black and white",
+      caption: "rang vagar pan tu sauthi rangeen che",
+      backNote: "Vintage movie ni koi heroine jevi lagis tu ahiya. Timeless beauty.",
+      category: "candid",
       side: "right",
       size: "sm",
     },
@@ -148,8 +152,12 @@ export const GALLERY: GalleryBlock[] = [
   {
     type: "memory",
     data: {
+      id: "mem-40",
       src: "/media/IMG-20260905-WA0040.jpg",
       alt: "Nandini, haath vaal ma, aankho bandh",
+      caption: "ek shanti no shwaas",
+      backNote: "Tari aatli innocent ada... mara dil ni dhadkan vadhari de che har vaar.",
+      category: "candid",
       side: "left",
       size: "md",
     },
@@ -164,11 +172,14 @@ export const GALLERY: GalleryBlock[] = [
   {
     type: "memory",
     data: {
+      id: "mem-vid",
       src: "/media/VID-20260903-WA0010.mp4",
       alt: "Nandini no ek video",
       kind: "video",
       poster: "/media/IMG-20260905-WA0048.jpg",
       caption: "aa mane sauthi vhalu che. koi karan nathi. bas che.",
+      backNote: "Aa video hu hazaro vaar joi chukyo chu. Tari harkato, taru bolvu, badhu j dil ma vaselu che.",
+      category: "video",
       side: "center",
       size: "lg",
     },
@@ -176,8 +187,12 @@ export const GALLERY: GalleryBlock[] = [
   {
     type: "memory",
     data: {
+      id: "mem-19",
       src: "/media/IMG-20260905-WA0019.jpg",
       alt: "Nandini balcony ni paali par besi ne",
+      caption: "hava ne pan tara vaal sathe ramvu che",
+      backNote: "Balcony ane tu... mari aakhi duniya ahiya j thambhi jaay che.",
+      category: "balcony",
       side: "left",
       size: "md",
     },
@@ -185,8 +200,12 @@ export const GALLERY: GalleryBlock[] = [
   {
     type: "memory",
     data: {
+      id: "mem-06",
       src: "/media/IMG-20260903-WA0006.jpg",
       alt: "Nandini, najik thi, shant",
+      caption: "shant, komal, ane nishpap",
+      backNote: "Ketli masoom che tu. Tari aakhi masoomiyat ni raksha karvani jimmedari mari che.",
+      category: "smile",
       rotate: true,
       side: "right",
       size: "md",
@@ -202,9 +221,12 @@ export const GALLERY: GalleryBlock[] = [
   {
     type: "memory",
     data: {
+      id: "mem-48",
       src: "/media/IMG-20260905-WA0048.jpg",
       alt: "Nandini, simple, saame joti",
       caption: "kai j extra nahi. bas tu.",
+      backNote: "Koi filter vagar, koi banaavat vagar... bas tu jevi che evi j mari jaan che.",
+      category: "candid",
       side: "center",
       size: "lg",
     },
@@ -218,7 +240,466 @@ export const GALLERY: GalleryBlock[] = [
   },
 ];
 
-/* Handy derived lists ----------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   THE COMPLETE 50-PIECE ARCHIVE FOR THE MEMORY VAULT
+   Every single media file with detailed notes and tags.
+   -------------------------------------------------------------------------- */
+export const ALL_MEMORIES: Memory[] = [
+  {
+    id: "all-01",
+    src: "/media/IMG-20260901-WA0002.jpg",
+    alt: "Nandini in saree",
+    caption: "Aarsa saame ubhi rehli Nandini — pure grace",
+    backNote: "Saree ma tu etli khubsurat lage che ke shabdo ocha pade. Ekdum rajkumari jevi.",
+    category: "saree",
+    date: "1 Sept 2026",
+  },
+  {
+    id: "all-02",
+    src: "/media/IMG-20260901-WA0003.jpg",
+    alt: "Nandini traditional look",
+    caption: "Traditional look ane tari aa sharmati hasi",
+    backNote: "Jyare tu sharmay che tyre mara dil ni gati be-guna vadhari jaay che.",
+    category: "saree",
+    date: "1 Sept 2026",
+  },
+  {
+    id: "all-03",
+    src: "/media/IMG-20260901-WA0004.jpg",
+    alt: "Nandini looking down",
+    caption: "Neeche joti nani si muskaan",
+    backNote: "Tari aa aada par to hu har vaar maru dil haari jau chu.",
+    category: "saree",
+    date: "1 Sept 2026",
+  },
+  {
+    id: "all-04",
+    src: "/media/IMG-20260901-WA0005.jpg",
+    alt: "Nandini posing with grace",
+    caption: "Elegance defined",
+    backNote: "Taru swag ane tari saadgi banne ek sathe perfect lage che.",
+    category: "saree",
+    date: "1 Sept 2026",
+  },
+  {
+    id: "all-05",
+    src: "/media/IMG-20260903-WA0004.jpg",
+    alt: "Nandini gentle portrait",
+    caption: "Komal aavaj ane shant chehro",
+    backNote: "Taro chehro joi ne aakho divas no thak utari jaay che.",
+    category: "candid",
+    date: "3 Sept 2026",
+  },
+  {
+    id: "all-06",
+    src: "/media/IMG-20260903-WA0006.jpg",
+    alt: "Nandini closeup",
+    caption: "Najik thi jova jevo chehro",
+    backNote: "Aankho ma ek alag j nasha ane sachai che. Bas tu j tu.",
+    category: "smile",
+    rotate: true,
+    date: "3 Sept 2026",
+  },
+  {
+    id: "all-07",
+    src: "/media/IMG-20260903-WA0007.jpg",
+    alt: "Nandini cute expression",
+    caption: "Cute expression je mane pagal kare che",
+    backNote: "Tu ketli cute che tane potane pan andajo nathi.",
+    category: "smile",
+    date: "3 Sept 2026",
+  },
+  {
+    id: "all-08",
+    src: "/media/IMG-20260903-WA0008.jpg",
+    alt: "Nandini glowing laughter",
+    caption: "Khul khulaat haasyu",
+    backNote: "Taru haasyu j mari duniya no sauthi meetho sur che.",
+    category: "smile",
+    rotate: true,
+    date: "3 Sept 2026",
+  },
+  {
+    id: "all-09",
+    src: "/media/IMG-20260905-WA0008.jpg",
+    alt: "Nandini candid",
+    caption: "Befikar candid moment",
+    backNote: "Jyare tane khabar pan na hoy ane photo padi jaay — that is true beauty.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-10",
+    src: "/media/IMG-20260905-WA0009.jpg",
+    alt: "Nandini outdoor",
+    caption: "Chalta chalta ek nazar",
+    backNote: "Tari ek j jhalak mari badhi mushkilo dur kari de che.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-11",
+    src: "/media/IMG-20260905-WA0010.jpg",
+    alt: "Nandini soft glance",
+    caption: "Soft glance, deep thoughts",
+    backNote: "Tari aakho ketli ghani vaato kahe che je tara otho nathi bolta.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-12",
+    src: "/media/IMG-20260905-WA0011.jpg",
+    alt: "Nandini sweet smile",
+    caption: "Dil jeeti leti hasi",
+    backNote: "Aa hasi maate to hu aakhi duniya sathe ladi shaku chu.",
+    category: "smile",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-13",
+    src: "/media/IMG-20260905-WA0012.jpg",
+    alt: "Nandini natural portrait",
+    caption: "Pure simplicity",
+    backNote: "Simplicity is the ultimate sophistication, and you prove it.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-14",
+    src: "/media/IMG-20260905-WA0013.jpg",
+    alt: "Nandini monochrome",
+    caption: "Black and white soul",
+    backNote: "Rang na hoy toh pan tari chamak aakhi jagat ma felaay che.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-15",
+    src: "/media/IMG-20260905-WA0014.jpg",
+    alt: "Nandini deep eyes",
+    caption: "Aankho ma samandar",
+    backNote: "Tari aankho ma doobvu mane badha kartaa vadhare game che.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-16",
+    src: "/media/IMG-20260905-WA0015.jpg",
+    alt: "Nandini casual day",
+    caption: "Everyday magic",
+    backNote: "Tu normal divas ne pan tyohar banavi de che.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-17",
+    src: "/media/IMG-20260905-WA0016.jpg",
+    alt: "Nandini radiant glow",
+    caption: "Radiance that shines from inside",
+    backNote: "Taru dil jetlu saaf che etlo j taro chehro chhamke che.",
+    category: "smile",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-18",
+    src: "/media/IMG-20260905-WA0017.jpg",
+    alt: "Nandini gentle pose",
+    caption: "Gentleness personified",
+    backNote: "Duniya jetli kadvi hoy, tu etli j mithi ane pyaari che.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-19",
+    src: "/media/IMG-20260905-WA0018.jpg",
+    alt: "Nandini quiet evening",
+    caption: "Sanjh no suraj ane tu",
+    backNote: "Golden hour pan tari aagad fiko padi jaay che.",
+    category: "balcony",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-20",
+    src: "/media/IMG-20260905-WA0019.jpg",
+    alt: "Nandini balcony ledge",
+    caption: "Balcony ni hawa ane tari ada",
+    backNote: "Aa photo ma tari je shanti che ae mane jivant raakhe che.",
+    category: "balcony",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-21",
+    src: "/media/IMG-20260905-WA0020.jpg",
+    alt: "Nandini joyful laugh",
+    caption: "Laughter that stops time",
+    backNote: "Tari hasi e mara jeevan ma sau thi moti khushi laavi che.",
+    category: "smile",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-22",
+    src: "/media/IMG-20260905-WA0021.jpg",
+    alt: "Nandini stunning profile",
+    caption: "Perfection in every angle",
+    backNote: "Har angle thi tu flawless che, mari rajkumari.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-23",
+    src: "/media/IMG-20260905-WA0022.jpg",
+    alt: "Nandini looking away",
+    caption: "Quiet daydreaming",
+    backNote: "Tari aankho ma shu sapna ramta hashe? Hu e sapna sachha karva mangu chu.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-24",
+    src: "/media/IMG-20260905-WA0023.jpg",
+    alt: "Nandini sunset light",
+    caption: "Suraj ni kirno ane taro chehro",
+    backNote: "Tadko pan tane aalingan aapi ne khush thaay che.",
+    category: "balcony",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-25",
+    src: "/media/IMG-20260905-WA0025.jpg",
+    alt: "Nandini soft smile",
+    caption: "Dil no karar",
+    backNote: "Jyare mane bechaini thay, hu aa photo joi lau chu.",
+    category: "smile",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-26",
+    src: "/media/IMG-20260905-WA0026.jpg",
+    alt: "Nandini candid sitting",
+    caption: "Besi ne shanti thi",
+    backNote: "Tu jya pan besis, e jagya mandir banavi dais.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-27",
+    src: "/media/IMG-20260905-WA0027.jpg",
+    alt: "Nandini serene gaze",
+    caption: "Serene soul",
+    backNote: "Ketlo shant swabhav, ketlo pyaro aawaj... mari Nandini.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-28",
+    src: "/media/IMG-20260905-WA0028.jpg",
+    alt: "Nandini thinking",
+    caption: "Deep thought expression",
+    backNote: "Tu jyre vichar karti hoy tyre mari aakho tara thi hat-ti j nathi.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-29",
+    src: "/media/IMG-20260905-WA0029.jpg",
+    alt: "Nandini cozy balcony",
+    caption: "Balcony moments",
+    backNote: "Tari sathe balcony ma besi ne aakhi zindagi kaadhvi che.",
+    category: "balcony",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-30",
+    src: "/media/IMG-20260905-WA0030.jpg",
+    alt: "Nandini golden sunshine",
+    caption: "Golden hour with my golden girl",
+    backNote: "Aa photo mara phone ma wallpaper hoy ke na hoy, mara dil ma print thayelo che.",
+    category: "balcony",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-31",
+    src: "/media/IMG-20260905-WA0031.jpg",
+    alt: "Nandini playful mood",
+    caption: "Masti bhareli aankho",
+    backNote: "Tari tofaani masti mara dil ne ketli khushi aape che!",
+    category: "smile",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-32",
+    src: "/media/IMG-20260905-WA0032.jpg",
+    alt: "Nandini sweet candid",
+    caption: "Unfiltered innocence",
+    backNote: "Aatli innocent chokri aa aakhi duniya ma biji koi nathi.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-33",
+    src: "/media/IMG-20260905-WA0033.jpg",
+    alt: "Nandini beautiful look",
+    caption: "Nazar na laage mara Nandu ne",
+    backNote: "Sau thi pehla kaalo teeko lagavo che tane, aatli pyaari che tu.",
+    category: "smile",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-34",
+    src: "/media/IMG-20260905-WA0034.jpg",
+    alt: "Nandini close angle",
+    caption: "Close to my heart",
+    backNote: "Tu ketli door hoy pan dil thi aatli j najik che har pal.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-35",
+    src: "/media/IMG-20260905-WA0035.jpg",
+    alt: "Nandini cute hands on cheeks",
+    caption: "Haath gaal par ane nani muskaan",
+    backNote: "Kahe che ke hu photogenic nathi... are tu to universe ni sauthi sundar tasveer che!",
+    category: "smile",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-36",
+    src: "/media/IMG-20260905-WA0036.jpg",
+    alt: "Nandini graceful turn",
+    caption: "Grace in motion",
+    backNote: "Taro har ek andaaz dil ma vasva layak che.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-37",
+    src: "/media/IMG-20260905-WA0037.jpg",
+    alt: "Nandini bright smile",
+    caption: "Chamkatu haasyu",
+    backNote: "Aa haasyu kyarey kho-vai na jovo joiye. Hu kaayam aane sambhalish.",
+    category: "smile",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-38",
+    src: "/media/IMG-20260905-WA0038.jpg",
+    alt: "Nandini peaceful glance",
+    caption: "Aankho ma sachaai",
+    backNote: "Tari sachai e mane taro diwano banavyo che.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-39",
+    src: "/media/IMG-20260905-WA0039.jpg",
+    alt: "Nandini cute expression",
+    caption: "Sweetest smile",
+    backNote: "Tari hasi joi ne lage che ke bhagwane khali tara maate j time kadhyo hato.",
+    category: "smile",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-40",
+    src: "/media/IMG-20260905-WA0040.jpg",
+    alt: "Nandini hair touch",
+    caption: "Haath vaal ma, aakho bandh",
+    backNote: "Tari aa shant ada mane aakhi zindigi yaad rehshe.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-41",
+    src: "/media/IMG-20260905-WA0041.jpg",
+    alt: "Nandini natural charm",
+    caption: "Charming in every way",
+    backNote: "Koi banaavat nathi, bas taru shuddh prem ane saundarya che.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-42",
+    src: "/media/IMG-20260905-WA0042.jpg",
+    alt: "Nandini glowing portrait",
+    caption: "Glow like moonlight",
+    backNote: "Chandra pan tara chehra ni chamak joi ne sharmaay jaay.",
+    category: "smile",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-43",
+    src: "/media/IMG-20260905-WA0043.jpg",
+    alt: "Nandini hand on chin",
+    caption: "Chin resting on hand, looking up",
+    backNote: "Aa moment ma time rokai gayo hoy evu lagyu hatu mane.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-44",
+    src: "/media/IMG-20260905-WA0044.jpg",
+    alt: "Nandini deep focus",
+    caption: "Intense and lovely",
+    backNote: "Tari aakho ma joine hu mara badha dukh bhuli jau chu.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-45",
+    src: "/media/IMG-20260905-WA0045.jpg",
+    alt: "Nandini lovely portrait",
+    caption: "Warmth personified",
+    backNote: "Tari huñfa mari jindagina sauthi mota aashirwad che.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-46",
+    src: "/media/IMG-20260905-WA0046.jpg",
+    alt: "Nandini sweet smile",
+    caption: "Happiness in your eyes",
+    backNote: "Tari aakho ni khushi j maru lakshya che, Nandu.",
+    category: "smile",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-47",
+    src: "/media/IMG-20260905-WA0047.jpg",
+    alt: "Nandini thoughtful glance",
+    caption: "Sweet thoughtful moment",
+    backNote: "Har ek vichar ma, har ek dua ma tu j chhe.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-48",
+    src: "/media/IMG-20260905-WA0048.jpg",
+    alt: "Nandini simple & pure",
+    caption: "Bas tu. Pure and unmatched.",
+    backNote: "Jevi che evi j tu mari aakhi duniya che. Koi sudharo nathi joiye mane.",
+    category: "candid",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-49",
+    src: "/media/IMG-20260905-WA0049.jpg",
+    alt: "Nandini final portrait",
+    caption: "My forever favorite person",
+    backNote: "Aa jivan ma ane pachi na har jivan ma, hu fakt taro j rahi sh.",
+    category: "smile",
+    date: "5 Sept 2026",
+  },
+  {
+    id: "all-video",
+    src: "/media/VID-20260903-WA0010.mp4",
+    alt: "Nandini heartwarming video clip",
+    kind: "video",
+    poster: "/media/IMG-20260905-WA0048.jpg",
+    caption: "Taru hasvu, taru bolvu, taro aawaj — priceless",
+    backNote: "Aa video joine lagyu ke khushi no sacho matlab fakt taro aawaj ane tari hasi j che.",
+    category: "video",
+    date: "3 Sept 2026",
+  },
+];
 
 export const MEMORIES: Memory[] = GALLERY.filter(
   (b): b is { type: "memory"; data: Memory } => b.type === "memory",

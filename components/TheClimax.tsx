@@ -89,7 +89,7 @@ export default function TheClimax() {
   const closerY = useTransform(progress, [0.78, 0.92], [18, 0]);
 
   return (
-    <section aria-label="Ek vaat" className="relative">
+    <section id="climax" aria-label="Ek vaat" className="relative">
       {/* The scroll track. Its height is what gives the quote room to build. */}
       <div ref={trackRef} className="relative h-[420svh]">
         {/* The veil that blurs the world behind the quote */}

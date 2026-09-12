@@ -18,8 +18,8 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Nandini",
-  description: "Aa to bas ek jhalak che. Aakhi vaarta 7 October e.",
+  title: "Nandini — My Forever & Always | By Meet",
+  description: "Tu mari aakhi duniya che. A celestial sanctuary crafted with all my love for Nandini.",
   robots: { index: false, follow: false },
 };
 

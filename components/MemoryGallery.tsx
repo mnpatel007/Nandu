@@ -199,7 +199,7 @@ export default function MemoryGallery() {
   });
 
   return (
-    <section ref={ref} className="relative py-[10vh]" aria-label="Yaadein">
+    <section id="memories" ref={ref} className="relative py-[10vh]" aria-label="Yaadein">
       <RailLine progress={scrollYProgress} />
 
       <div className="relative mx-auto flex w-full max-w-5xl flex-col gap-[14vh]">
