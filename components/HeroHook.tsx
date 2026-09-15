@@ -75,7 +75,7 @@ export default function HeroHook() {
                 transition={{ delay: 0.35, duration: 1.2, ease: [0.22, 0.61, 0.24, 1] }}
                 className="text-[11px] font-light uppercase tracking-[0.55em] text-gold/90"
               >
-                A Celestial Sanctuary Dedicated To
+                Taro Safe Space · Dedicated To
               </motion.span>
 
               <motion.h1
@@ -93,7 +93,7 @@ export default function HeroHook() {
                 transition={{ delay: 1.15, duration: 1.4, ease: [0.22, 0.61, 0.24, 1] }}
                 className="max-w-md font-display text-[clamp(1rem,3.2vw,1.4rem)] font-light italic text-ether text-glow balance"
               >
-                Tu mari aakhi duniya che · My Forever & Always
+                Tu ahiyan safe che · Meet ahiyan j che, koi shart vagar
               </motion.p>
 
               {/* Scroll invitation button */}

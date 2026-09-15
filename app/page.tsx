@@ -90,7 +90,7 @@ export default function Page() {
               Made with every single beat of my heart for Nandini
             </p>
             <p className="text-[10px] font-light uppercase tracking-[0.45em] text-haze/50">
-              Meet & Nandini · Forever & Always
+              Taro Safe Space · Kaayam ahiyan j chu, koi shart vagar · Meet
             </p>
           </div>
         </footer>

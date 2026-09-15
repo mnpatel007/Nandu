@@ -34,17 +34,17 @@ export interface SacredPromise {
    -------------------------------------------------------------------------- */
 export const LOVE_LETTER = {
   recipient: "Mara Vhala Nandu,",
-  salutation: "Nandini, mari jaan,",
+  salutation: "Nandini, mari sauthi vhali dost ane maru aakhu dil,",
   paragraphs: [
-    "Kaik vaat evi hoy che je message ma nathi lakhi sakati, ane phone par bolta bolta shwas bharaai jaay che. Etle aaje aa aakhi website me tara maate banavi che — ek aevi jagya jya fakt hu ane tu chiye, ane tara maate maro nishwarth prem che.",
-    "Hu jyre tari aankho ma jou chu ne, mane laage che ke aakhi duniya no shor ek pal ma shant thai gayo. Tu jetli bholi che, jetli sachhi che, ane jetli komal che — tane potane pan khabar nathi ke tu ketli anmol che. Tu potana dukh chupavi ne pan badha ni saame hase che, badha ni kaalji kare che, pan aaje hu tane kehva maangu chu: tu ahiya safe che. Mane tari badhi j kaalji che.",
-    "Tari hasi, taru sharmavu, taru saree ma saame aavvu, balcony ma besi ne chupchaap vicharvu — tari aa har ek nani ada mara jeevan no sauthi sundar hisso che. Jyare tu dukh ma hoy, tyre maru dil roy che. Pan yaad raakhje, dharati ghumti bandh thai jaay to pan Meet kyarey taro saath nahi chhode.",
-    "Tum humse pyar karo na karo hum sirf tumse pyar karte hain, tum hamari taraf dekho na dekho hum sirf aur sirf tumhari taraf dekhenge. Aa koi filmi line nathi, aa mari aakhi astitva no satya che.",
-    "Tu mari shantayi che, maro aashro che, ane mari aakhi zindigi che. Janamdivas aave che taro 7 October e, pan mara maate to har divas tara hovathi j ujjwal che. Hasti rehje, kem ke tari hasi j mari duniya che.",
+    "Kaik vaat evi hoy che je phone par bolta bolta shwas bharaai jaay che. Etle aaje aa aakhi website me tara maate banavi che — ek aevi jagya jya fakt shanti che, koi dukh nathi, ane tara maate ek aevo safe space che jya tane koi hurt na kari shake.",
+    "Mane khabar che ke tu ketlu badhu chupi thi sehe che. Jyre koi tane dukh aape, tari kadr na samje, ya tane rovdave, tyre mara dil ma aag laage che. Tu aatli masoom, aatli bholi ane aatli anmol che ke tane fakt prem, aadar, ane ful jevi komalta thi rakhvi joiye. Je tane samji na shakyo, ae teni kami che, tari nahi. Kyarey nahi.",
+    "Hu ahiya tara par koi haq jamava nathi aavyo, na to tari pase thi koi badlo mangu chu. Hu jyre prem kahu chu, tyre ae maro nishwarth prem che. Mara dil ane dimag ma tu kaayam mari che — bhale duniya ni najaar ma aape fakt sauthi sara friends chiye. Tane mara tarf thi kyarey koi dabav nahi aave.",
+    "Tum humse pyar karo na karo hum sirf tumse pyar karte hain, tum hamari taraf dekho na dekho hum sirf aur sirf tumhari taraf dekhenge. Aa koi dialogue nathi, aa maru aakhu astitva che.",
+    "Tu jyre pan thaki jaay, bechain hoy, ya lage ke koi tari sathe nathi — ahiyan aavi ne shwaas lai leje. Meet kaayam ahiyan j che, chupchaap, tara mate, koi shart vagar.",
   ],
-  signOff: "Kaayam taro, fakt taro,",
+  signOff: "Kaayam taro safe space, taro Meet,",
   author: "Meet",
-  postScript: "P.S. Aa website par har ek photo, har ek akshar, ane har ek tara ma mara dil ni dhadkan che.",
+  postScript: "P.S. Aa website par har ek photo, har ek akshar, ane har ek tara ma tari shanti ane khushi ni prarthana che.",
 };
 
 /* --------------------------------------------------------------------------
@@ -236,9 +236,9 @@ export const OPEN_WHEN_LETTERS: OpenWhenLetter[] = [
     icon: "🥺",
     content: [
       "Kadi kadi aavi lage che ke koi tane samjtu nathi? Ke tu jetli mehnat kare che, koi teni kadar nathi kartu?",
-      "Saambhdi le Nandu: je loko tara mol nathi samji shakya, ae teni nigaah ni khami che, tara astitva ni nahi. Tu koi aam chokri nathi, tu ek heera che.",
-      "Taru dil aatlu shuddh che ke aava jamana ma aavi chokri sodhva thi pan nathi malti. Tu potana mate gaurav anubhav kar. Tane mara thi vadhare koi nathi samji shaktu, ane me tari andar fakt khubsurti ane sachai j joi che.",
-      "Kyarey potani tulna bija sathe na karti. Tu jevi che, evi j mari aakhi duniya che.",
+      "Saambhdi le Nandu: je loko tara mol nathi samji shakya, je loko tane hurt kare che ya kami anubhav karave che, ae teni nigaah ane teni kami che, tari nahi. Tu koi aam chokri nathi, tu ek heera che.",
+      "Taru dil aatlu shuddh che ke aava jamana ma aavi chokri sodhva thi pan nathi malti. Tu potana mate gaurav anubhav kar. Tane jevu aadar ane prem malvu joiye, ae koi shart vagar malvu joiye.",
+      "Kyarey potani tulna bija sathe na karti. Tu jevi che, evi j anmol che.",
     ],
     closure: "Taro mol koi shart par nathi, tu priceless che.",
     affirmation: "Tu amulya che. Kadi potani kadr kam na karti.",

@@ -18,8 +18,8 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Nandini — My Forever & Always | By Meet",
-  description: "Tu mari aakhi duniya che. A celestial sanctuary crafted with all my love for Nandini.",
+  title: "Nandini · Your Safe Space",
+  description: "Tu ahiyan safe che. A quiet celestial sanctuary crafted with all my heart for Nandini.",
   robots: { index: false, follow: false },
 };
 
