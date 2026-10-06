@@ -216,7 +216,7 @@ export default function TrailerOutro() {
   return (
     <section
       id="outro"
-      className="relative flex min-h-[110svh] flex-col items-center justify-center overflow-hidden px-6 py-[16vh]"
+      className="relative flex min-h-[110svh] flex-col items-center justify-center overflow-x-clip px-4 sm:px-6 py-[14vh] sm:py-[16vh] w-full max-w-full"
       aria-label="Aage shu"
     >
       <ParticleField />

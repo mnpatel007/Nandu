@@ -53,14 +53,14 @@ export default function FloatingNav() {
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1.2, ease: [0.22, 0.61, 0.24, 1] }}
-      className="fixed top-3 inset-x-0 z-40 flex justify-center px-4 pointer-events-none"
+      className="fixed top-2.5 sm:top-3 inset-x-0 z-40 flex justify-center px-2 sm:px-4 pointer-events-none"
     >
       <nav
         aria-label="Chapters of Us"
-        className={`pointer-events-auto flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border transition-all duration-500 overflow-x-auto max-w-[96vw] ${
+        className={`pointer-events-auto flex items-center gap-0.5 sm:gap-2 px-2 py-1 sm:px-4 sm:py-2 rounded-full border bg-black/40 backdrop-blur-xl transition-all duration-500 overflow-x-auto scrollbar-none max-w-[98vw] sm:max-w-[96vw] ${
           isScrolled
-            ? "glass border-rose/30 shadow-[0_10px_35px_-10px_rgba(242,128,155,0.25)]"
-            : "bg-black/30 backdrop-blur-md border-white/10"
+            ? "border-rose/30 shadow-[0_10px_35px_-10px_rgba(242,128,155,0.25)]"
+            : "border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.5)]"
         }`}
       >
         <span className="hidden md:inline-block pl-2 pr-1 text-[11px] font-display italic tracking-widest text-gold/90 uppercase select-none">
@@ -75,7 +75,7 @@ export default function FloatingNav() {
               key={item.id}
               type="button"
               onClick={() => scrollTo(item.id)}
-              className={`relative flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-light transition-all whitespace-nowrap ${
+              className={`relative flex items-center gap-1.5 px-2 py-1 sm:px-2.5 sm:py-1 rounded-full text-xs font-light transition-all whitespace-nowrap flex-shrink-0 ${
                 isActive
                   ? "text-ether font-medium"
                   : "text-haze hover:text-ether hover:bg-white/5"
@@ -88,7 +88,7 @@ export default function FloatingNav() {
                   transition={{ type: "spring", stiffness: 350, damping: 28 }}
                 />
               )}
-              <span className="text-[13px]">{item.icon}</span>
+              <span className="text-xs sm:text-[13px]">{item.icon}</span>
               <span className="hidden sm:inline text-[11px] tracking-wide">
                 {item.label}
               </span>

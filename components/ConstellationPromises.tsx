@@ -18,7 +18,7 @@ export default function ConstellationPromises() {
     <section
       id="promises"
       aria-label="Constellation of Promises"
-      className="relative min-h-[95svh] py-24 px-4 sm:px-6 flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-[95svh] py-20 sm:py-24 px-4 sm:px-6 flex flex-col items-center justify-center overflow-x-clip w-full max-w-full"
     >
       {/* Background Starry Sky Canvas Simulation */}
       <div

@@ -42,7 +42,7 @@ export default function ReasonsDeck() {
     <section
       id="reasons"
       aria-label="Reasons Why You Are My Life"
-      className="relative min-h-[90svh] py-24 px-4 sm:px-6 flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-[90svh] py-20 sm:py-24 px-4 sm:px-6 flex flex-col items-center justify-center overflow-x-clip w-full max-w-full"
     >
       {/* Background radial glow */}
       <div

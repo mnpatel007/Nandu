@@ -21,7 +21,7 @@ export default function LoveLetter() {
     <section
       id="letter"
       aria-label="Prem Patra"
-      className="relative min-h-[90svh] flex flex-col items-center justify-center px-4 py-20 overflow-hidden"
+      className="relative min-h-[90svh] flex flex-col items-center justify-center px-4 py-20 overflow-x-clip w-full max-w-full"
     >
       {/* Subtle background glow */}
       <div

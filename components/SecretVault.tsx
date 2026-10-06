@@ -46,7 +46,7 @@ export default function SecretVault() {
     <section
       id="secret-vault"
       aria-label="Secret Heart Vault"
-      className="relative min-h-[90svh] py-24 px-4 sm:px-6 flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-[90svh] py-20 sm:py-24 px-4 sm:px-6 flex flex-col items-center justify-center overflow-x-clip w-full max-w-full"
     >
       {/* Shooting Star Animation Layer */}
       {shootingStarActive && (

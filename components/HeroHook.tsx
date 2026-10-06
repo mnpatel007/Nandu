@@ -39,7 +39,7 @@ export default function HeroHook() {
   return (
     <section
       id="prologue"
-      className="relative flex min-h-[100svh] scene items-center justify-center overflow-hidden px-6"
+      className="relative flex min-h-[100svh] scene items-center justify-center overflow-x-clip px-4 sm:px-6 w-full max-w-full"
       aria-label="Shuruaat"
     >
       {/* The opening breathing lines */}

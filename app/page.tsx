@@ -50,7 +50,7 @@ export default function Page() {
       />
 
       {/* Main Narrative Odyssey */}
-      <main className="relative">
+      <main className="relative w-full max-w-full overflow-x-clip">
         {/* Chapter 1: The Portal & Her Name */}
         <HeroHook />
 

@@ -22,7 +22,7 @@ export default function OpenWhen() {
     <section
       id="open-when"
       aria-label="Open When Sanctuary"
-      className="relative min-h-[90svh] py-24 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center"
+      className="relative min-h-[90svh] py-20 sm:py-24 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center overflow-x-clip w-full max-w-full"
     >
       {/* Background glow */}
       <div

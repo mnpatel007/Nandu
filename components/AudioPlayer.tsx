@@ -282,7 +282,7 @@ export default function AudioPlayer() {
   }, [fadeTo, playing, usingFile]);
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex items-center gap-3">
+    <div className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-50 flex items-center gap-3 max-w-[calc(100vw-32px)]">
       {/* Sound On Hint */}
       <AnimatePresence>
         {hint && !playing && (

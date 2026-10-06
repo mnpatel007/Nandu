@@ -23,14 +23,14 @@ import { GALLERY, type Interlude, type Memory } from "@/lib/memories";
    ========================================================================== */
 
 const SIZE_CLASS: Record<NonNullable<Memory["size"]>, string> = {
-  sm: "max-w-[230px] sm:max-w-[280px]",
-  md: "max-w-[300px] sm:max-w-[380px]",
-  lg: "max-w-[360px] sm:max-w-[460px]",
+  sm: "max-w-[220px] sm:max-w-[280px]",
+  md: "max-w-[280px] sm:max-w-[380px]",
+  lg: "max-w-[min(340px,86vw)] sm:max-w-[460px]",
 };
 
 const SIDE_CLASS: Record<NonNullable<Memory["side"]>, string> = {
-  left: "mr-auto sm:ml-[4%]",
-  right: "ml-auto sm:mr-[4%]",
+  left: "mr-auto ml-2 sm:ml-[4%]",
+  right: "ml-auto mr-2 sm:mr-[4%]",
   center: "mx-auto",
 };
 
@@ -58,9 +58,9 @@ function MemoryCard({ memory, index }: { memory: Memory; index: number }) {
 
   /* Everything below is a no-op when the viewer asked for reduced motion. */
   const y = useTransform(eased, [0, 1], reduced ? [0, 0] : [110, -110]);
-  const rotateY = useTransform(eased, [0, 0.5, 1], reduced ? [0, 0, 0] : [9 * lean, 0, -9 * lean]);
-  const rotateX = useTransform(eased, [0, 0.5, 1], reduced ? [0, 0, 0] : [7, 0, -7]);
-  const skewY = useTransform(eased, [0, 0.5, 1], reduced ? [0, 0, 0] : [1.6 * lean, 0, -1.6 * lean]);
+  const rotateY = useTransform(eased, [0, 0.5, 1], reduced ? [0, 0, 0] : [6 * lean, 0, -6 * lean]);
+  const rotateX = useTransform(eased, [0, 0.5, 1], reduced ? [0, 0, 0] : [4.5, 0, -4.5]);
+  const skewY = useTransform(eased, [0, 0.5, 1], reduced ? [0, 0, 0] : [1 * lean, 0, -1 * lean]);
   const scale = useTransform(eased, [0, 0.5, 1], reduced ? [1, 1, 1] : [0.93, 1, 0.93]);
   const opacity = useTransform(eased, [0, 0.16, 0.84, 1], reduced ? [1, 1, 1, 1] : [0.32, 1, 1, 0.32]);
 
@@ -80,7 +80,7 @@ function MemoryCard({ memory, index }: { memory: Memory; index: number }) {
         {/* Soft light that leaks out from behind the card on hover */}
         <span
           aria-hidden
-          className="pointer-events-none absolute -inset-8 -z-10 rounded-[40px] opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-100"
+          className="pointer-events-none absolute -inset-2 sm:-inset-6 -z-10 rounded-[40px] opacity-0 blur-2xl sm:blur-3xl transition-opacity duration-700 group-hover:opacity-100"
           style={{
             background:
               "radial-gradient(ellipse at 50% 50%, rgba(242,128,155,0.35), transparent 70%)",
@@ -153,7 +153,7 @@ function InterludeBlock({ interlude }: { interlude: Interlude }) {
         rest: {},
         shown: { transition: { staggerChildren: 0.22, delayChildren: 0.08 } },
       }}
-      className="mx-auto max-w-2xl px-6 py-[16vh] text-center"
+      className="mx-auto max-w-2xl px-4 sm:px-6 py-[12vh] sm:py-[16vh] text-center"
     >
       {interlude.lines.map((line, i) => (
         <motion.p
@@ -199,7 +199,12 @@ export default function MemoryGallery() {
   });
 
   return (
-    <section id="memories" ref={ref} className="relative py-[10vh]" aria-label="Yaadein">
+    <section
+      id="memories"
+      ref={ref}
+      className="relative py-[10vh] w-full max-w-full overflow-x-clip"
+      aria-label="Yaadein"
+    >
       <RailLine progress={scrollYProgress} />
 
       <div className="relative mx-auto flex w-full max-w-5xl flex-col gap-[14vh]">
