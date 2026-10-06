@@ -4,19 +4,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /* ============================================================================
-   AudioPlayer — Generative Romantic Symphony & Soundscapes
+   AudioPlayer — Auto-detecting MP3 Player with Procedural Synth Fallback
    ============================================================================ */
 
-const USE_FILE = false;
 const FILE_SRC = "/media/song.mp3";
-
-type SoundMode = "celestial" | "piano" | "rain";
-
-const SOUND_MODES: Array<{ id: SoundMode; label: string; icon: string }> = [
-  { id: "celestial", label: "Celestial Dream", icon: "✨" },
-  { id: "piano", label: "Lovers' Piano", icon: "🎹" },
-  { id: "rain", label: "Midnight Rain", icon: "🌧️" },
-];
 
 const SCALE = [0, 2, 4, 7, 9, 12, 14, 16, 19, 21];
 const ROOT = 207.65; // G#3
@@ -26,8 +17,7 @@ export default function AudioPlayer() {
   const [playing, setPlaying] = useState(false);
   const [ready, setReady] = useState(false);
   const [hint, setHint] = useState(true);
-  const [mode, setMode] = useState<SoundMode>("celestial");
-  const [showMenu, setShowMenu] = useState(false);
+  const [usingFile, setUsingFile] = useState(false);
 
   const ctxRef = useRef<AudioContext | null>(null);
   const masterRef = useRef<GainNode | null>(null);
@@ -228,43 +218,60 @@ export default function AudioPlayer() {
   const toggle = useCallback(() => {
     setHint(false);
 
-    if (USE_FILE) {
-      if (!elementRef.current) {
-        const el = new Audio(FILE_SRC);
-        el.loop = true;
-        el.volume = 0.45;
-        elementRef.current = el;
-      }
-      const el = elementRef.current;
-      if (playing) {
+    if (!elementRef.current) {
+      const el = new Audio(FILE_SRC);
+      el.loop = true;
+      el.volume = 0.45;
+      elementRef.current = el;
+    }
+    const el = elementRef.current;
+
+    if (playing) {
+      if (usingFile) {
         el.pause();
-        setPlaying(false);
       } else {
-        void el.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+        fadeTo(0, 1.2);
       }
+      setPlaying(false);
       return;
     }
 
-    if (!ctxRef.current) build();
-    const ctx = ctxRef.current;
-    if (!ctx) return;
-
-    if (ctx.state === "suspended") void ctx.resume();
-
-    if (playing) {
-      fadeTo(0, 1.2);
-      setPlaying(false);
-    } else {
-      fadeTo(TARGET_VOLUME, 2.5);
-      setPlaying(true);
-    }
-  }, [build, fadeTo, playing]);
+    // Try playing the MP3 file first
+    el.play()
+      .then(() => {
+        setUsingFile(true);
+        setPlaying(true);
+        setReady(true);
+      })
+      .catch(() => {
+        // Fallback to ambient procedural synth if MP3 not yet placed or blocked
+        setUsingFile(false);
+        if (!ctxRef.current) build();
+        const ctx = ctxRef.current;
+        if (!ctx) return;
+        if (ctx.state === "suspended") void ctx.resume();
+        fadeTo(TARGET_VOLUME, 2.5);
+        setPlaying(true);
+      });
+  }, [build, fadeTo, playing, usingFile]);
 
   // Duck audio when video plays
   useEffect(() => {
-    const onDuck = () => fadeTo(0.03, 0.5);
+    const onDuck = () => {
+      if (usingFile && elementRef.current) {
+        elementRef.current.volume = 0.06;
+      } else {
+        fadeTo(0.03, 0.5);
+      }
+    };
     const onRestore = () => {
-      if (playing) fadeTo(TARGET_VOLUME, 1.2);
+      if (playing) {
+        if (usingFile && elementRef.current) {
+          elementRef.current.volume = 0.45;
+        } else {
+          fadeTo(TARGET_VOLUME, 1.2);
+        }
+      }
     };
     window.addEventListener("nandini:duck", onDuck);
     window.addEventListener("nandini:unduck", onRestore);
@@ -272,7 +279,7 @@ export default function AudioPlayer() {
       window.removeEventListener("nandini:duck", onDuck);
       window.removeEventListener("nandini:unduck", onRestore);
     };
-  }, [fadeTo, playing]);
+  }, [fadeTo, playing, usingFile]);
 
   return (
     <div className="fixed bottom-5 right-5 z-50 flex items-center gap-3">
@@ -287,7 +294,7 @@ export default function AudioPlayer() {
             exit={{ opacity: 0, x: 10 }}
             className="glass-soft hidden sm:flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-light tracking-wider text-ether uppercase border border-rose/30 shadow-[0_0_20px_rgba(242,128,155,0.2)]"
           >
-            <span>🎵 Tap for romantic music</span>
+            <span>🎵 Tap for music</span>
           </motion.button>
         )}
       </AnimatePresence>
