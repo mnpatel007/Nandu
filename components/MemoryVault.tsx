@@ -38,6 +38,7 @@ export default function MemoryVault() {
   const [activeMemoryIndex, setActiveMemoryIndex] = useState<number | null>(null);
   const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
   const [isCinemaMode, setIsCinemaMode] = useState(false);
+  const [isReelModalOpen, setIsReelModalOpen] = useState(false);
 
   // Filter memories
   const filteredMemories = useMemo(() => {
@@ -60,6 +61,20 @@ export default function MemoryVault() {
     setIsCinemaMode(false);
   }, []);
 
+  const openReelModal = () => {
+    setIsReelModalOpen(true);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("nandini:duck"));
+    }
+  };
+
+  const closeReelModal = useCallback(() => {
+    setIsReelModalOpen(false);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("nandini:unduck"));
+    }
+  }, []);
+
   const nextMemory = useCallback(() => {
     if (activeMemoryIndex === null) return;
     setActiveMemoryIndex((activeMemoryIndex + 1) % filteredMemories.length);
@@ -72,18 +87,21 @@ export default function MemoryVault() {
     );
   }, [activeMemoryIndex, filteredMemories.length]);
 
-  // Keyboard navigation for lightbox
+  // Keyboard navigation for lightbox & reel modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (isReelModalOpen) closeReelModal();
+        if (activeMemoryIndex !== null) closeLightbox();
+      }
       if (activeMemoryIndex === null) return;
-      if (e.key === "Escape") closeLightbox();
       if (e.key === "ArrowRight") nextMemory();
       if (e.key === "ArrowLeft") prevMemory();
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeMemoryIndex, closeLightbox, nextMemory, prevMemory]);
+  }, [activeMemoryIndex, closeLightbox, closeReelModal, isReelModalOpen, nextMemory, prevMemory]);
 
   // Cinema Mode Autoplay
   useEffect(() => {
@@ -141,14 +159,11 @@ export default function MemoryVault() {
         >
           <button
             type="button"
-            onClick={() => {
-              setActiveMemoryIndex(0);
-              setIsCinemaMode(true);
-            }}
-            className="glass flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-light text-gold border border-gold/40 hover:bg-gold/10 transition-all shadow-[0_0_20px_rgba(243,201,139,0.2)]"
+            onClick={openReelModal}
+            className="glass flex items-center gap-2.5 px-6 py-2.5 rounded-full text-xs font-light text-gold border border-gold/40 hover:bg-gold/15 transition-all shadow-[0_0_20px_rgba(243,201,139,0.25)] hover:scale-105 active:scale-95"
           >
-            <span>▶</span>
-            <span>Play Cinematic Memory Reel</span>
+            <span className="text-sm">▶</span>
+            <span className="tracking-wide">Play Her Favourite Cinematic Reel 🎞️</span>
           </button>
         </motion.div>
       </div>
@@ -411,6 +426,76 @@ export default function MemoryVault() {
                     "{activeMemory.backNote}"
                   </p>
                 )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* HER FAVOURITE REEL CINEMATIC THEATER MODAL */}
+      <AnimatePresence>
+        {isReelModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-2xl p-4 sm:p-6"
+            onClick={closeReelModal}
+          >
+            {/* Top Toolbar */}
+            <div
+              className="absolute top-4 inset-x-4 sm:inset-x-8 flex items-center justify-between text-ether z-20"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center gap-3">
+                <span className="px-3.5 py-1 rounded-full bg-gold/20 border border-gold/50 text-[11px] text-gold tracking-widest uppercase font-mono shadow-[0_0_15px_rgba(243,201,139,0.3)]">
+                  🎞️ Her Favourite Reel
+                </span>
+                <span className="text-xs text-haze italic hidden sm:inline">
+                  A vintage memory captured in motion
+                </span>
+              </div>
+
+              <button
+                type="button"
+                onClick={closeReelModal}
+                className="h-9 w-9 rounded-full glass grid place-items-center text-sm text-haze hover:text-white transition-colors"
+                aria-label="Close reel player"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Video Presentation */}
+            <motion.div
+              initial={{ scale: 0.94, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.94, opacity: 0 }}
+              transition={{ duration: 0.35, ease: [0.22, 0.61, 0.24, 1] }}
+              className="relative max-w-4xl w-full flex flex-col items-center justify-center p-2"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative w-full max-h-[75vh] flex items-center justify-center rounded-2xl overflow-hidden shadow-[0_0_90px_rgba(243,201,139,0.35)] border border-gold/30 bg-black">
+                <video
+                  src="/media/Her_Favourite_Reel_v2_Vintage.mp4"
+                  controls
+                  autoPlay
+                  playsInline
+                  preload="auto"
+                  className="max-h-[75vh] w-auto max-w-full rounded-2xl bg-black"
+                  onPlay={() => window.dispatchEvent(new Event("nandini:duck"))}
+                  onPause={() => window.dispatchEvent(new Event("nandini:unduck"))}
+                  onEnded={() => window.dispatchEvent(new Event("nandini:unduck"))}
+                />
+              </div>
+
+              <div className="mt-4 text-center max-w-md">
+                <p className="font-display text-base text-gold italic">
+                  "Her Favourite Reel"
+                </p>
+                <p className="text-xs text-haze/80 font-light mt-1">
+                  Vintage moments and memories that never fade.
+                </p>
               </div>
             </motion.div>
           </motion.div>

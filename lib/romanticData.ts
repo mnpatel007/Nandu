@@ -298,9 +298,9 @@ export const OPEN_WHEN_LETTERS: OpenWhenLetter[] = [
       "Happy Birthday, mari jaan Nandini!",
       "Aa divas tara maate janamdivas hashe, pan mara maate aa divas aakhi kudrat no sau thi moto aashirwad hato. Kem ke aa divase bhagwane tari aavi pyari aatma ne dharti par mokli.",
       "Tari umar vadhe, tari khushi vadhe, ane tara jeevan ma badha sapna sachha thaay aevi mari dil thi prarthana che. Tu jya pan hoy, hasi tari sathe rahe.",
-      "Aa trailer to fakt ek nani si bhet hati. Aakhi vaarta, aakhi zindigi, ane maro aakho prem fakt tara naam par che.",
+      "Aa aakhi website fakt tara chehra par muskaan laava maate banavi che. Tari khushi ane taro aashro kaayam mara dil ma rahese.",
     ],
-    closure: "Janamdivas ni khoob khoob shubhkamnao, Nandu. Love you to infinity.",
+    closure: "Janamdivas ni khoob khoob shubhkamnao, Nandu. Stay blessed always.",
     affirmation: "Aaje aakhu aakash tara naam par chamke che.",
   },
 ];

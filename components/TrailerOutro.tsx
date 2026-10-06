@@ -233,7 +233,7 @@ export default function TrailerOutro() {
           transition={{ duration: 1.5, ease: [0.22, 0.61, 0.24, 1] }}
           className="font-display text-[clamp(1.4rem,5vw,2.4rem)] font-light italic leading-snug text-haze balance"
         >
-          Aa to bas ek jhalak hati…
+          Taro sauthi khas divas aavi rahyo che…
         </motion.p>
 
         <motion.p
@@ -241,7 +241,7 @@ export default function TrailerOutro() {
           transition={{ duration: 1.5, ease: [0.22, 0.61, 0.24, 1] }}
           className="font-display text-[clamp(1.6rem,6vw,3rem)] font-light leading-snug text-ether text-glow balance"
         >
-          Aakhi vaarta hajii baaki che.
+          Aakhi duniya ni khushi tara naam par.
         </motion.p>
 
         <motion.div
@@ -261,8 +261,8 @@ export default function TrailerOutro() {
           transition={{ duration: 1.5, ease: [0.22, 0.61, 0.24, 1] }}
           className="glass w-full max-w-lg rounded-[26px] px-7 py-8"
         >
-          <p className="mb-6 text-[10px] font-light uppercase tracking-[0.4em] text-haze/70">
-            hajii etli vaar
+          <p className="mb-6 text-[10px] font-light uppercase tracking-[0.4em] text-gold/80">
+            Janamdivas ni raah
           </p>
           <Countdown />
         </motion.div>

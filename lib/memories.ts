@@ -699,6 +699,17 @@ export const ALL_MEMORIES: Memory[] = [
     category: "video",
     date: "3 Sept 2026",
   },
+  {
+    id: "all-fav-reel",
+    src: "/media/Her_Favourite_Reel_v2_Vintage.mp4",
+    alt: "Nandini - Her Favourite Reel",
+    kind: "video",
+    poster: "/media/IMG-20260905-WA0030.jpg",
+    caption: "Her Favourite Reel — vintage memory in motion",
+    backNote: "Tari sauthi favourite reel... har vaar joine dil khush thai jaay.",
+    category: "video",
+    date: "Special Memory",
+  },
 ];
 
 export const MEMORIES: Memory[] = GALLERY.filter(
