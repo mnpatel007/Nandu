@@ -13,7 +13,6 @@ import MemoryVault from "@/components/MemoryVault";
 import ReasonsDeck from "@/components/ReasonsDeck";
 import OpenWhen from "@/components/OpenWhen";
 import ConstellationPromises from "@/components/ConstellationPromises";
-import TheClimax from "@/components/TheClimax";
 import SecretVault from "@/components/SecretVault";
 import TrailerOutro from "@/components/TrailerOutro";
 
@@ -73,10 +72,7 @@ export default function Page() {
         {/* Chapter 7: Constellation of Sacred Promises */}
         <ConstellationPromises />
 
-        {/* Chapter 8: The Vow & Word-by-Word Dialogue Reveal */}
-        <TheClimax />
-
-        {/* Chapter 9: The Secret Vault & Wishing Star */}
+        {/* Chapter 8: The Secret Vault & Wishing Star */}
         <SecretVault />
 
         {/* Chapter 10: The Grand Countdown to 7 October & Heartbeat Reveal */}

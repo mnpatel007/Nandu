@@ -16,7 +16,6 @@ const NAV_ITEMS: NavItem[] = [
   { id: "reasons", label: "100 Reasons", icon: "💖" },
   { id: "open-when", label: "Open When", icon: "💌" },
   { id: "promises", label: "Promises", icon: "✨" },
-  { id: "climax", label: "The Vow", icon: "💬" },
   { id: "secret-vault", label: "Secret Box", icon: "🔐" },
   { id: "outro", label: "7 October", icon: "🎂" },
 ];

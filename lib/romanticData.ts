@@ -39,7 +39,7 @@ export const LOVE_LETTER = {
     "Kaik vaat evi hoy che je phone par bolta bolta shwas bharaai jaay che. Etle aaje aa aakhi website me tara maate banavi che — ek aevi jagya jya fakt shanti che, koi dukh nathi, ane tara maate ek aevo safe space che jya tane koi hurt na kari shake.",
     "Mane khabar che ke tu ketlu badhu chupi thi sehe che. Jyre koi tane dukh aape, tari kadr na samje, ya tane rovdave, tyre mara dil ma aag laage che. Tu aatli masoom, aatli bholi ane aatli anmol che ke tane fakt prem, aadar, ane ful jevi komalta thi rakhvi joiye. Je tane samji na shakyo, ae teni kami che, tari nahi. Kyarey nahi.",
     "Hu ahiya tara par koi haq jamava nathi aavyo, na to tari pase thi koi badlo mangu chu. Hu jyre prem kahu chu, tyre ae maro nishwarth prem che. Mara dil ane dimag ma tu kaayam mari che — bhale duniya ni najaar ma aape fakt sauthi sara friends chiye. Tane mara tarf thi kyarey koi dabav nahi aave.",
-    "Tum humse pyar karo na karo hum sirf tumse pyar karte hain, tum hamari taraf dekho na dekho hum sirf aur sirf tumhari taraf dekhenge. Aa koi dialogue nathi, aa maru aakhu astitva che.",
+    "Tari khushi, tari shanti, ane taro aadar mara maate badha kartaa vadhare mahatvapurna che. Mara mann ma tara maate je jagya che ae kaayam aevi j rehshe — nishwarth, pavitra, ane bina koi shart.",
     "Tu jyre pan thaki jaay, bechain hoy, ya lage ke koi tari sathe nathi — ahiyan aavi ne shwaas lai leje. Meet kaayam ahiyan j che, chupchaap, tara mate, koi shart vagar.",
   ],
   signOff: "Kaayam taro safe space, taro Meet,",
@@ -353,9 +353,9 @@ export const SACRED_PROMISES: SacredPromise[] = [
   },
   {
     id: 7,
-    starName: "Tara of Eternal Devotion",
-    promise: "Tum humse pyar karo na karo hum sirf tumse pyar karte hain. For this lifetime and every one after.",
-    whisper: "Maro prem koi badlo nathi mangto, bas taro che.",
+    starName: "Tara of Eternal Friendship",
+    promise: "I promise that no matter where life leads, Meet will always be your unwavering safe haven and truest friend.",
+    whisper: "Maro aashro kaayam taro che, koi shart vagar.",
     coordinates: { x: 62, y: 82 },
   },
 ];
